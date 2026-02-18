@@ -293,80 +293,34 @@ const App: React.FC = () => {
                    <TrendChart data={selectedCoin} detailed />
                 </div>
 
-                {/* Analysis Reasoning */}
-                    <div className="p-4 bg-slate-900/50 rounded-xl border border-slate-800">
-                      <h4 className="text-xs font-bold text-slate-500 uppercase mb-2 flex items-center gap-2">
-                        <Activity size={14} /> Analysis Reasoning
-                      </h4>
-                      <p className="text-slate-300 text-sm leading-relaxed">
-                        {selectedCoin.reasoning}
-                      </p>
-                    </div>
+                <div className="bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
+                  <h4 className="text-sm font-semibold text-slate-300 mb-2">Analysis & Reasoning</h4>
+                  <p className="text-slate-300 text-sm leading-relaxed">{selectedCoin.reasoning}</p>
+                </div>
+              </div>
+            </div>
 
-                    {/* NOVO BLOCO: RISK CALIBRATION */}
-                    {selectedCoin.volatility && (
-                      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="p-4 bg-indigo-500/5 rounded-xl border border-indigo-500/20">
-                          <h4 className="text-xs font-bold text-indigo-400 uppercase mb-3 flex items-center gap-2">
-                            <Gauge size={14} /> Volatility & Noise
-                          </h4>
-                          <div className="space-y-3">
-                            <div className="flex justify-between items-center">
-                              <span className="text-xs text-slate-400">Market Noise</span>
-                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                                selectedCoin.volatility.noise === 'High' ? 'bg-red-500/20 text-red-400' : 'bg-emerald-500/20 text-emerald-400'
-                              }`}>
-                                {selectedCoin.volatility.noise}
-                              </span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="text-xs text-slate-400">ATR Relative</span>
-                              <span className="text-sm font-mono text-slate-200">{selectedCoin.volatility.atrPercent}</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="p-4 bg-amber-500/5 rounded-xl border border-amber-500/20">
-                          <h4 className="text-xs font-bold text-amber-400 uppercase mb-3 flex items-center gap-2">
-                            <AlertTriangle size={14} /> Execution Risk
-                          </h4>
-                          <div className="space-y-3">
-                            <div className="flex justify-between items-center">
-                              <span className="text-xs text-slate-400">Stop Buffer</span>
-                              <span className="text-sm font-mono text-amber-400">± {selectedCoin.volatility.stopBuffer}</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="text-xs text-slate-400">Rec. Leverage</span>
-                              <span className="text-sm font-mono text-slate-200">
-                                {selectedCoin.volatility.noise === 'High' ? 'Low' : 'Normal'}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* NOVO BLOCO: TARGET LEVELS (SL/TP) */}
-                    {selectedCoin.execution && (
-                      <div className="mt-4 p-4 bg-slate-900/80 rounded-xl border border-slate-700 border-dashed">
-                        <h4 className="text-xs font-bold text-slate-500 uppercase mb-3">Suggested Execution</h4>
-                        <div className="grid grid-cols-3 gap-2">
-                          <div className="text-center">
-                            <p className="text-[10px] text-slate-500 uppercase">Entry</p>
-                            <p className="text-sm font-mono text-white">{selectedCoin.execution.entry}</p>
-                          </div>
-                          <div className="text-center">
-                            <p className="text-[10px] text-red-500 uppercase">Stop Loss</p>
-                            <p className="text-sm font-mono text-red-400">{selectedCoin.execution.sl}</p>
-                          </div>
-                          <div className="text-center">
-                            <p className="text-[10px] text-emerald-500 uppercase">Take Profit</p>
-                            <p className="text-sm font-mono text-emerald-400">{selectedCoin.execution.tp}</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+            {/* Market Health */}
+            {data.marketHealth && (
+              <div className="bg-slate-900 border border-indigo-900/30 rounded-2xl p-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <HeartPulse className="text-indigo-500" />
+                  <h2 className="text-2xl font-bold text-indigo-100">Market Health Projection</h2>
+                </div>
+                <div className="grid md:grid-cols-3 gap-8">
+                   <div className="text-center p-6 bg-slate-950/50 rounded-xl border border-slate-800">
+                      <Gauge size={40} className="mx-auto mb-2 text-emerald-400" />
+                      <div className="text-slate-400 text-xs uppercase mb-1">Projection</div>
+                      <div className="text-xl font-bold">{data.marketHealth.projection}</div>
+                   </div>
+                   <div className="text-center p-6 bg-slate-950/50 rounded-xl border border-slate-800">
+                      <Waves size={40} className="mx-auto mb-2 text-indigo-400" />
+                      <div className="text-slate-400 text-xs uppercase mb-1">Flow State</div>
+                      <div className="text-xl font-bold">{data.marketHealth.flowState}</div>
+                   </div>
+                   <div className="p-6 bg-slate-950/30 rounded-xl border border-slate-800/50">
+                      <p className="text-sm text-slate-300">{data.marketHealth.reasoning}</p>
+                   </div>
                 </div>
               </div>
             )}
@@ -377,7 +331,7 @@ const App: React.FC = () => {
   );
 };
 
-// Sub-componente da lista (MANTIDO IGUAL)
+// Sub-componente da lista
 const CoinListItem: React.FC<{
   coin: MarketTrend;
   isSelected: boolean;
@@ -400,19 +354,10 @@ const CoinListItem: React.FC<{
           {coin.trendStrengthScore > 85 && <Zap size={12} className="text-yellow-400 fill-yellow-400" />}
         </div>
         <div className={`text-xs font-mono ${isBullish ? 'text-emerald-400' : 'text-red-400'}`}>
-          {isBullish ? '+' : ''}{coin.change24h}%
+          {coin.change24h > 0 ? '+' : ''}{coin.change24h}%
         </div>
       </div>
-      
-      <div className="flex items-center gap-3">
-        <div className="text-right hidden sm:block">
-          <div className="text-xs font-mono text-slate-300">${coin.price}</div>
-          <div className="text-[10px] text-slate-500 uppercase">Score: {coin.trendStrengthScore}</div>
-        </div>
-        <div className={`p-1.5 rounded-lg ${isBullish ? 'bg-emerald-500/10' : 'bg-red-500/10'}`}>
-          {isBullish ? <TrendingUp size={16} className="text-emerald-500" /> : <TrendingDown size={16} className="text-red-500" />}
-        </div>
-      </div>
+      <TrendChart data={coin} />
     </button>
   );
 };
