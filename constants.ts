@@ -10,7 +10,7 @@ export const getGeminiPrompt = (timeframe: Timeframe): string => {
   return `
 Atue como um **Algoritmo de HFT com Foco em ADX e Volatilidade Bilateral**.
 
-Você deve usar o Google Search/Finance para obter os dados reais.
+IMPORTANTE: Nunca mude a escala do ativo. Se o ativo custa 0.007, não escreva 0.015. Use o ticker completo (ex: PENGUUSDT) para garantir a busca via API.
 
 🎯 **OBJETIVO:** Gerar duas listas distintas: **TOP 3-5 BULLISH** e **TOP 3-5 BEARISH**.
 O usuário notou que você estava ignorando tendências de baixa. **É CRÍTICO buscar ativamente por moedas em queda livre (panic selling/breakdown).**
