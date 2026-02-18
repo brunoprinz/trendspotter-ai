@@ -13,17 +13,9 @@ export interface MarketTrend {
   resistance: number;
 }
 
-export interface MarketHealth {
-  projection: 'Consistent Upward' | 'Consistent Downward' | 'Median Upward' | 'Median Downward' | 'Intermittent Volatility' | 'Choppy/Neutral';
-  flowState: 'Consistent' | 'Median' | 'Intermittent';
-  score: number; // 0-100 (Health score)
-  reasoning: string;
-}
-
 export interface MarketAnalysisData {
   timestamp: string;
   summary: string;
-  marketHealth: MarketHealth;
   bullish: MarketTrend[];
   bearish: MarketTrend[];
 }

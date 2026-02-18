@@ -17,10 +17,7 @@ import {
   Activity,
   Search,
   Clock,
-  Zap,
-  Gauge,
-  Waves,
-  HeartPulse
+  Zap
 } from 'lucide-react';
 
 const App: React.FC = () => {
@@ -111,7 +108,7 @@ const App: React.FC = () => {
       {/* Progress */}
       <StepIndicator currentStep={step} />
 
-      <main className="max-w-6xl mx-auto pb-12">
+      <main className="max-w-5xl mx-auto">
         
         {/* Step 1: Prompt Generation */}
         {step === 'prompt' && (
@@ -266,7 +263,7 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid lg:grid-cols-12 gap-6 min-h-[600px]">
+            <div className="grid lg:grid-cols-12 gap-6 h-auto lg:h-[600px]">
               
               {/* Left Column: Lists */}
               <div className="lg:col-span-5 flex flex-col gap-6 h-full overflow-hidden">
@@ -277,7 +274,7 @@ const App: React.FC = () => {
                       <TrendingUp className="text-emerald-500" size={20} />
                       <h3 className="font-bold text-emerald-100">Bullish Trends</h3>
                    </div>
-                   <div className="flex-1 overflow-y-auto p-2 space-y-2 custom-scrollbar max-h-[300px] lg:max-h-none">
+                   <div className="flex-1 overflow-y-auto p-2 space-y-2 custom-scrollbar">
                       {data.bullish.map(coin => (
                         <CoinListItem 
                           key={coin.symbol} 
@@ -295,7 +292,7 @@ const App: React.FC = () => {
                       <TrendingDown className="text-red-500" size={20} />
                       <h3 className="font-bold text-red-100">Bearish Trends</h3>
                    </div>
-                   <div className="flex-1 overflow-y-auto p-2 space-y-2 custom-scrollbar max-h-[300px] lg:max-h-none">
+                   <div className="flex-1 overflow-y-auto p-2 space-y-2 custom-scrollbar">
                       {data.bearish.map(coin => (
                         <CoinListItem 
                           key={coin.symbol} 
@@ -310,7 +307,7 @@ const App: React.FC = () => {
               </div>
 
               {/* Right Column: Detail View */}
-              <div className="lg:col-span-7 bg-slate-900/80 backdrop-blur-md border border-slate-700 rounded-2xl p-6 h-full flex flex-col">
+              <div className="lg:col-span-7 bg-slate-900/80 backdrop-blur-md border border-slate-700 rounded-2xl p-6 lg:h-full flex flex-col">
                 <div className="flex justify-between items-start mb-6">
                   <div>
                     <h2 className="text-3xl font-bold flex items-center gap-3">
@@ -390,73 +387,6 @@ const App: React.FC = () => {
 
               </div>
             </div>
-
-            {/* MARKET HEALTH PROJECTION SECTION (New) */}
-            {data.marketHealth && (
-              <div className="mt-8 bg-slate-900 border border-indigo-900/30 rounded-2xl p-6 lg:p-8 relative overflow-hidden">
-                {/* Background Decor */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                
-                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-indigo-600/20 rounded-lg">
-                      <HeartPulse size={24} className="text-indigo-500" />
-                    </div>
-                    <h2 className="text-2xl font-bold text-indigo-100">
-                      Market Health Projection
-                    </h2>
-                  </div>
-
-                  <div className="grid md:grid-cols-3 gap-8">
-                    
-                    {/* Projection Status */}
-                    <div className="flex flex-col items-center justify-center p-6 bg-slate-950/50 rounded-xl border border-slate-800">
-                      <Gauge size={48} className={`mb-3
-                          ${data.marketHealth.score > 70 ? 'text-emerald-400' : 
-                            data.marketHealth.score < 30 ? 'text-red-400' : 'text-yellow-400'}
-                      `} />
-                      <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">Trend Projection</span>
-                      <span className={`text-xl font-bold text-center
-                        ${data.marketHealth.projection.includes('Consistent') ? 'text-emerald-300' : 
-                          data.marketHealth.projection.includes('Intermittent') ? 'text-red-300' : 'text-blue-300'}
-                      `}>
-                        {data.marketHealth.projection}
-                      </span>
-                    </div>
-
-                    {/* Flow Consistency */}
-                    <div className="flex flex-col items-center justify-center p-6 bg-slate-950/50 rounded-xl border border-slate-800">
-                      <Waves size={48} className={`mb-3
-                          ${data.marketHealth.flowState === 'Consistent' ? 'text-indigo-400' : 
-                            data.marketHealth.flowState === 'Median' ? 'text-blue-400' : 'text-slate-500'}
-                      `} />
-                      <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-2">Flow State</span>
-                      <span className={`text-xl font-bold
-                        ${data.marketHealth.flowState === 'Consistent' ? 'text-indigo-300' : 
-                          data.marketHealth.flowState === 'Median' ? 'text-blue-300' : 'text-slate-400'}
-                      `}>
-                        {data.marketHealth.flowState}
-                      </span>
-                      <div className="mt-2 text-xs text-slate-500 font-mono">
-                         Score: {data.marketHealth.score}/100
-                      </div>
-                    </div>
-
-                    {/* Reasoning */}
-                    <div className="md:col-span-1 flex flex-col justify-center bg-slate-950/30 p-6 rounded-xl border border-slate-800/50">
-                       <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                         <Activity size={14} /> Historical Context Analysis
-                       </h4>
-                       <p className="text-slate-200 leading-relaxed text-sm">
-                         {data.marketHealth.reasoning}
-                       </p>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            )}
-
           </div>
         )}
 

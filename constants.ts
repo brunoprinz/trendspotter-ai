@@ -35,16 +35,6 @@ Para cada moeda, você deve calcular/estimar um **'trendStrengthScore' (0-100)**
 
 ---
 
-### 🏥 MARKET HEALTH PROJECTION (NOVO - Seção Extra):
-Além de listar os ativos, analise o comportamento histórico macro (Diário/Semanal) dos ativos identificados.
-*   **Consistent:** O fluxo é limpo? Os ativos seguem topos e fundos claros também no gráfico diário?
-*   **Median:** O fluxo é bom no curto prazo, mas contra a tendência macro ou lateral no diário.
-*   **Intermittent:** Alta volatilidade, pavios longos, "rabiscos" no gráfico. Difícil operar.
-
-Gere um diagnóstico: 'Consistent Upward', 'Median Downward', 'Intermittent Volatility', etc.
-
----
-
 ### 🕵️‍♂️ PARÂMETROS DE BUSCA (Busque ambos os lados):
 *   Lado Compra: "Binance futures top gainers ${freshnessWindow}", "Crypto breakout strong volume"
 *   Lado Venda: "Binance futures top losers ${freshnessWindow}", "Crypto breakdown support levels", "Coins dumping right now"
@@ -55,12 +45,6 @@ Gere um diagnóstico: 'Consistent Upward', 'Median Downward', 'Intermittent Vola
 {
   "timestamp": "ISO Date String",
   "summary": "Resumo balanceado. Ex: 'Mercado misto. Encontramos 4 ativos rompendo topos e 3 ativos perdendo suportes importantes com alto volume de venda.'",
-  "marketHealth": {
-    "projection": "Consistent Upward", 
-    "flowState": "Consistent", 
-    "score": 85,
-    "reasoning": "A maioria dos ativos listados (Bullish) também apresenta estrutura de alta no gráfico diário e semanal, confirmando um fluxo saudável e sustentável."
-  },
   "bullish": [
     {
       "symbol": "COINUSDT",
@@ -100,12 +84,6 @@ Gere um diagnóstico: 'Consistent Upward', 'Median Downward', 'Intermittent Vola
 export const DEMO_DATA: MarketAnalysisData = {
   timestamp: new Date().toISOString(),
   summary: "Análise Bilateral: O mercado apresenta oportunidades claras em ambas as direções. Enquanto tokens de IA sobem forte, memecoins antigas estão perdendo suportes críticos.",
-  marketHealth: {
-    projection: "Median Upward",
-    flowState: "Median",
-    score: 65,
-    reasoning: "Embora tenhamos rompimentos fortes em IA (Bullish), o Bitcoin enfrenta resistência no semanal, o que gera divergências e torna o fluxo menos consistente (Median) do que uma tendência de alta pura."
-  },
   bullish: [
     {
       symbol: "OGNUSDT",
