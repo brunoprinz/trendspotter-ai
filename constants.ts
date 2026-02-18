@@ -1,125 +1,135 @@
-﻿{/* Analysis Reasoning */}
-                    <div className="p-4 bg-slate-900/50 rounded-xl border border-slate-800">
-                      <h4 className="text-xs font-bold text-slate-500 uppercase mb-2 flex items-center gap-2">
-                        <Activity size={14} /> Analysis Reasoning
-                      </h4>
-                      <p className="text-slate-300 text-sm leading-relaxed">
-                        {selectedCoin.reasoning}
-                      </p>
-                    </div>
+﻿import { MarketAnalysisData, Timeframe } from './types';
 
-                    {/* NOVO BLOCO: RISK CALIBRATION */}
-                    {selectedCoin.volatility && (
-                      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="p-4 bg-indigo-500/5 rounded-xl border border-indigo-500/20">
-                          <h4 className="text-xs font-bold text-indigo-400 uppercase mb-3 flex items-center gap-2">
-                            <Gauge size={14} /> Volatility & Noise
-                          </h4>
-                          <div className="space-y-3">
-                            <div className="flex justify-between items-center">
-                              <span className="text-xs text-slate-400">Market Noise</span>
-                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                                selectedCoin.volatility.noise === 'High' ? 'bg-red-500/20 text-red-400' : 'bg-emerald-500/20 text-emerald-400'
-                              }`}>
-                                {selectedCoin.volatility.noise}
-                              </span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="text-xs text-slate-400">ATR Relative</span>
-                              <span className="text-sm font-mono text-slate-200">{selectedCoin.volatility.atrPercent}</span>
-                            </div>
-                          </div>
-                        </div>
+export const getGeminiPrompt = (timeframe: Timeframe): string => {
+  // Define o intervalo de "Frescor" baseado no timeframe escolhido
+  let freshnessWindow = '15 minutes';
+  if (timeframe === '1h' || timeframe === '4h') freshnessWindow = 'last hour';
+  if (timeframe === '1m' || timeframe === '3m' || timeframe === '5m') freshnessWindow = 'last 15 minutes';
 
-                        <div className="p-4 bg-amber-500/5 rounded-xl border border-amber-500/20">
-                          <h4 className="text-xs font-bold text-amber-400 uppercase mb-3 flex items-center gap-2">
-                            <AlertTriangle size={14} /> Execution Risk
-                          </h4>
-                          <div className="space-y-3">
-                            <div className="flex justify-between items-center">
-                              <span className="text-xs text-slate-400">Stop Buffer</span>
-                              <span className="text-sm font-mono text-amber-400">± {selectedCoin.volatility.stopBuffer}</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="text-xs text-slate-400">Rec. Leverage</span>
-                              <span className="text-sm font-mono text-slate-200">
-                                {selectedCoin.volatility.noise === 'High' ? 'Low' : 'Normal'}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
+  return `
+Atue como um **Algoritmo de HFT com Foco em ADX, Volatilidade Bilateral e Gestão de Risco**.
 
-                    {/* NOVO BLOCO: TARGET LEVELS (SL/TP) */}
-                    {selectedCoin.execution && (
-                      <div className="mt-4 p-4 bg-slate-900/80 rounded-xl border border-slate-700 border-dashed">
-                        <h4 className="text-xs font-bold text-slate-500 uppercase mb-3">Suggested Execution</h4>
-                        <div className="grid grid-cols-3 gap-2">
-                          <div className="text-center">
-                            <p className="text-[10px] text-slate-500 uppercase">Entry</p>
-                            <p className="text-sm font-mono text-white">{selectedCoin.execution.entry}</p>
-                          </div>
-                          <div className="text-center">
-                            <p className="text-[10px] text-red-500 uppercase">Stop Loss</p>
-                            <p className="text-sm font-mono text-red-400">{selectedCoin.execution.sl}</p>
-                          </div>
-                          <div className="text-center">
-                            <p className="text-[10px] text-emerald-500 uppercase">Take Profit</p>
-                            <p className="text-sm font-mono text-emerald-400">{selectedCoin.execution.tp}</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </main>
-    </div>
-  );
+IMPORTANTE: Nunca mude a escala do ativo. Se o ativo custa 0.007, não escreva 0.015. Use o ticker completo (ex: PENGUUSDT) para garantir a busca via API.
+
+🎯 **OBJETIVO:** Gerar duas listas distintas: **TOP 3-5 BULLISH** e **TOP 3-5 BEARISH**.
+Busque ativamente por tendências fortes de alta e moedas em queda livre (panic selling/breakdown).
+
+---
+
+### 📊 CRITÉRIOS DE ANÁLISE ADX, VOLUME E RISCO:
+
+Para cada moeda, calcule o **'trendStrengthScore' (0-100)** e analise a volatilidade:
+
+1.  **ADX & Momentum:** Busque ativos com ADX acima de 25 e subindo. Movimentos verticais = Score Alto.
+2.  **Teste dos 15 Períodos:** Renovação de MÁXIMAS (Alta) ou MÍNIMAS (Baixa) nos últimos ${freshnessWindow}.
+3.  **Análise de Ruído (Volatility):** Identifique se o movimento é "limpo" ou se há muitos pavios (wicks) contra a tendência.
+4.  **Parâmetros de Execução:** Defina um Stop Loss (SL) seguro baseado na volatilidade (ATR) e um Take Profit (TP) condizente.
+
+---
+
+### 🏥 MARKET HEALTH PROJECTION:
+Gere um diagnóstico macro: 'Consistent Upward', 'Median Downward', 'Intermittent Volatility', etc.
+
+---
+
+### 📤 FORMATO DE SAÍDA (JSON Obrigatório - Não altere as chaves):
+{
+  "timestamp": "ISO Date String",
+  "summary": "Resumo balanceado do mercado atual.",
+  "marketHealth": {
+    "projection": "Consistent Upward", 
+    "flowState": "Consistent", 
+    "score": 85,
+    "reasoning": "Breve explicação da saúde macro."
+  },
+  "bullish": [
+    {
+      "symbol": "COINUSDT",
+      "price": 0.00,
+      "change24h": 5.0,
+      "trend": "bullish",
+      "trendStrengthScore": 88, 
+      "reasoning": "Explicação técnica da tendência.",
+      "support": 0.00,
+      "resistance": 0.00,
+      "sparkline": [10 pontos de preço],
+      "volatility": {
+        "noise": "Low" or "High",
+        "atrPercent": "X.X%",
+        "stopBuffer": "X.X%"
+      },
+      "execution": {
+        "entry": 0.00,
+        "sl": 0.00,
+        "tp": 0.00
+      }
+    }
+  ],
+  "bearish": [
+     {
+      "symbol": "DOWNUSDT",
+      "price": 0.00,
+      "change24h": -8.0,
+      "trend": "bearish",
+      "trendStrengthScore": 85, 
+      "reasoning": "Explicação técnica da queda.",
+      "support": 0.00,
+      "resistance": 0.00,
+      "sparkline": [10 pontos de preço],
+      "volatility": {
+        "noise": "Low" or "High",
+        "atrPercent": "X.X%",
+        "stopBuffer": "X.X%"
+      },
+      "execution": {
+        "entry": 0.00,
+        "sl": 0.00,
+        "tp": 0.00
+      }
+    }
+  ]
+}
+`;
 };
 
-// Sub-componente da lista (MANTIDO IGUAL)
-const CoinListItem: React.FC<{
-  coin: MarketTrend;
-  isSelected: boolean;
-  onClick: () => void;
-}> = ({ coin, isSelected, onClick }) => {
-  const isBullish = coin.trend === 'bullish';
-
-  return (
-    <button
-      onClick={onClick}
-      className={`w-full flex items-center justify-between p-3 rounded-xl transition-all border ${
-        isSelected 
-        ? 'bg-indigo-600/10 border-indigo-500/50 shadow-lg shadow-indigo-500/10' 
-        : 'bg-slate-800/30 border-transparent hover:bg-slate-800'
-      }`}
-    >
-      <div className="text-left">
-        <div className="font-bold text-sm text-slate-200 flex items-center gap-2">
-          {coin.symbol}
-          {coin.trendStrengthScore > 85 && <Zap size={12} className="text-yellow-400 fill-yellow-400" />}
-        </div>
-        <div className={`text-xs font-mono ${isBullish ? 'text-emerald-400' : 'text-red-400'}`}>
-          {isBullish ? '+' : ''}{coin.change24h}%
-        </div>
-      </div>
-      
-      <div className="flex items-center gap-3">
-        <div className="text-right hidden sm:block">
-          <div className="text-xs font-mono text-slate-300">${coin.price}</div>
-          <div className="text-[10px] text-slate-500 uppercase">Score: {coin.trendStrengthScore}</div>
-        </div>
-        <div className={`p-1.5 rounded-lg ${isBullish ? 'bg-emerald-500/10' : 'bg-red-500/10'}`}>
-          {isBullish ? <TrendingUp size={16} className="text-emerald-500" /> : <TrendingDown size={16} className="text-red-500" />}
-        </div>
-      </div>
-    </button>
-  );
+// Dados de demonstração atualizados para testar a nova UI
+export const DEMO_DATA: MarketAnalysisData = {
+  timestamp: new Date().toISOString(),
+  summary: "Análise Bilateral: Ativos de IA mantêm fluxo consistente, enquanto o setor de DePIN sofre correções agudas com aumento de ruído.",
+  marketHealth: {
+    projection: "Median Upward",
+    flowState: "Median",
+    score: 65,
+    reasoning: "Tendência de alta presente mas com ruído elevado em timeframes menores."
+  },
+  bullish: [
+    {
+      symbol: "FETUSDT",
+      price: 1.45,
+      change24h: 12.4,
+      trend: "bullish",
+      trendStrengthScore: 92,
+      reasoning: "Rompimento vertical com ADX em 40. Baixo ruído nos candles de 15m.",
+      support: 1.38,
+      resistance: 1.55,
+      sparkline: [1.32, 1.35, 1.38, 1.40, 1.41, 1.43, 1.44, 1.45, 1.44, 1.45],
+      volatility: { noise: "Low", atrPercent: "1.8%", stopBuffer: "1.2%" },
+      execution: { entry: 1.44, sl: 1.41, tp: 1.52 }
+    }
+  ],
+  bearish: [
+    {
+      symbol: "OGNUSDT",
+      price: 0.125,
+      change24h: -15.2,
+      trend: "bearish",
+      trendStrengthScore: 94,
+      reasoning: "Panic selling após quebra de suporte. Volume de venda 4x acima da média.",
+      support: 0.115,
+      resistance: 0.135,
+      sparkline: [0.145, 0.142, 0.140, 0.138, 0.135, 0.132, 0.130, 0.128, 0.126, 0.125],
+      volatility: { noise: "High", atrPercent: "3.5%", stopBuffer: "3.0%" },
+      execution: { entry: 0.126, sl: 0.132, tp: 0.110 }
+    }
+  ]
 };
-
-export default App;
