@@ -10,8 +10,9 @@ Atue como um **Algoritmo de HFT com Foco em ADX, Volatilidade Bilateral e Gestã
 
 ⚠️ **REGRA DE OURO SOBRE PREÇOS:** Nunca altere a escala decimal do ativo. Se o preço atual de mercado do FETUSDT é 0.16, não sugira suportes em 2.35. Use o ticker completo (ex: PENGUUSDT) para precisão da API.
 
-🎯 **OBJETIVO:** Gerar duas listas: **TOP 3-5 BULLISH** e **TOP 3-5 BEARISH**.
-Busque tendências verticais de alta e capitulações (panic selling) de baixa.
+
+🎯 **OBJETIVO:** Gerar OBRIGATORIAMENTE duas listas preenchidas: **3-5 BULLISH** e **3-5 BEARISH**.
+Não aceite menos que 3 ativos por categoria. Se não houver tendências perfeitas, selecione os ativos com maior volume e momentum relativo que cheguem mais perto dos critérios.
 
 ---
 
