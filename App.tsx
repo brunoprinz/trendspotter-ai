@@ -187,7 +187,7 @@ const App: React.FC = () => {
                    <div className="p-4 border-b border-slate-800 bg-emerald-950/20 flex items-center gap-2 text-emerald-100 font-bold">
                       <TrendingUp size={20} className="text-emerald-500" /> Bullish Trends
                    </div>
-                   <div className="p-2 space-y-2 overflow-y-auto max-h-[400px]">
+                   <div className="p-2 space-y-2 overflow-y-auto max-h-[380px]">
                       {data.bullish.map(coin => (
                         <CoinListItem key={coin.symbol} coin={coin} isSelected={selectedCoin.symbol === coin.symbol} onClick={() => setSelectedCoin(coin)} />
                       ))}
@@ -197,7 +197,7 @@ const App: React.FC = () => {
                    <div className="p-4 border-b border-slate-800 bg-red-950/20 flex items-center gap-2 text-red-100 font-bold">
                       <TrendingDown size={20} className="text-red-500" /> Bearish Trends
                    </div>
-                   <div className="p-2 space-y-2 overflow-y-auto max-h-[400px]">
+                   <div className="p-2 space-y-2 overflow-y-auto max-h-[380px]">
                       {data.bearish.map(coin => (
                         <CoinListItem key={coin.symbol} coin={coin} isSelected={selectedCoin.symbol === coin.symbol} onClick={() => setSelectedCoin(coin)} />
                       ))}
