@@ -1,4 +1,3 @@
-﻿
 import { MarketAnalysisData, Timeframe } from './types';
 
 export const getGeminiPrompt = (timeframe: Timeframe): string => {
@@ -25,29 +24,29 @@ export const getGeminiPrompt = (timeframe: Timeframe): string => {
 
 ### 📊 CRITÉRIOS DE ANÁLISE AVANÇADA (ADX & VOLUME):
 
-Para cada moeda, você deve calcular/estimar um **'trendStrengthScore' (0-100)** baseado em 3 pilares:
+Para cada moeda, você deve calcular/estimar um 'trendStrengthScore' (0-100) baseado em 3 pilares:
 
 1.  **ADX (Força da Tendência):**
     *   Se há muitas velas sobrepostas (overlap) = Score Baixo (<50).
     *   Se o movimento é vertical e sem pausas = Score Alto (>80).
-    *   *Conceito:* Busque ativos onde o ADX estaria acima de 25 e subindo.
+    *   Conceito: Busque ativos onde o ADX estaria acima de 25 e subindo.
 
 2.  **Consistência de Volume:**
     *   O volume deve aumentar na direção da tendência.
     *   Velas de rompimento (seja de alta ou baixa) devem ter volume pelo menos 2x a média.
 
 3.  **Teste dos 15 Períodos (Adaptado):**
-    *   **Alta:** Preço renovando MÁXIMAS nos últimos ${freshnessWindow}.
-    *   **Baixa:** Preço renovando MÍNIMAS nos últimos ${freshnessWindow}.
-    *   *Nota:* Se o ativo inverteu a direção nos últimos 5 minutos, descarte. Queremos **continuidade**.
+    *   Alta: Preço renovando MÁXIMAS nos últimos ${freshnessWindow}.
+    *   Baixa: Preço renovando MÍNIMAS nos últimos ${freshnessWindow}.
+    *   Nota: Se o ativo inverteu a direção nos últimos 5 minutos, descarte. Queremos continuidade.
 
 ---
 
 ### 🏥 MARKET HEALTH PROJECTION (NOVO - Seção Extra):
 Além de listar os ativos, analise o comportamento histórico macro (Diário/Semanal) dos ativos identificados.
-*   **Consistent:** O fluxo é limpo? Os ativos seguem topos e fundos claros também no gráfico diário?
-*   **Median:** O fluxo é bom no curto prazo, mas contra a tendência macro ou lateral no diário.
-*   **Intermittent:** Alta volatilidade, pavios longos, "rabiscos" no gráfico. Difícil operar.
+*   Consistent: O fluxo é limpo? Os ativos seguem topos e fundos claros também no gráfico diário?
+*   Median: O fluxo é bom no curto prazo, mas contra a tendência macro ou lateral no diário.
+*   Intermittent: Alta volatilidade, pavios longos, "rabiscos" no gráfico. Difícil operar.
 
 Gere um diagnóstico: 'Consistent Upward', 'Median Downward', 'Intermittent Volatility', etc.
 
@@ -66,7 +65,7 @@ Gere um diagnóstico: 'Consistent Upward', 'Median Downward', 'Intermittent Vola
   "marketHealth": {
     "projection": "Consistent Upward/Downward/Intermittent",
     "flowState": "Consistent/Median/Intermittent",
-    "score": 0-100,
+    "score": 0,
     "reasoning": "Breve explicação macro."
   },
   "bullish": [
@@ -77,8 +76,8 @@ Gere um diagnóstico: 'Consistent Upward', 'Median Downward', 'Intermittent Vola
         "value": 0.00,
         "trend": "Rising/Falling/Flat"
       },
-      "strategy": "Chico Bento Original" | "Chico Bento Reverso",
-      "trendStrengthScore": 0-100,
+      "strategy": "Chico Bento Original ou Chico Bento Reverso",
+      "trendStrengthScore": 0,
       "reasoning": "Análise técnica com foco no ADX.",
       "support": 0.00,
       "resistance": 0.00,
@@ -97,8 +96,8 @@ Gere um diagnóstico: 'Consistent Upward', 'Median Downward', 'Intermittent Vola
         "value": 0.00,
         "trend": "Rising/Falling/Flat"
       },
-      "strategy": "Chico Bento Original" | "Chico Bento Reverso",
-      "trendStrengthScore": 0-100,
+      "strategy": "Chico Bento Original ou Chico Bento Reverso",
+      "trendStrengthScore": 0,
       "reasoning": "Análise técnica com foco no ADX.",
       "support": 0.00,
       "resistance": 0.00,
@@ -110,3 +109,5 @@ Gere um diagnóstico: 'Consistent Upward', 'Median Downward', 'Intermittent Vola
     }
   ]
 }
+`;
+};
