@@ -114,13 +114,37 @@ Gere um diagnóstico: 'Consistent Upward', 'Median Downward', 'Intermittent Vola
 
 export const DEMO_DATA: MarketAnalysisData = {
   timestamp: new Date().toISOString(),
-  summary: "Aguardando análise em tempo real...",
+  summary: "Sistema inicializado. Aguardando comando de varredura...",
   marketHealth: {
     projection: "Intermittent",
     flowState: "Median",
     score: 50,
-    reasoning: "Sistema reiniciado. Execute uma nova varredura para atualizar os dados."
+    reasoning: "Pronto para analisar o ADX e Volatilidade."
   },
-  bullish: [],
-  bearish: []
+  bullish: [
+    {
+      symbol: "WAITING",
+      price: 0,
+      adx: { value: 0, trend: "Flat" },
+      strategy: "Chico Bento Original",
+      trendStrengthScore: 0,
+      reasoning: "Aguardando dados...",
+      support: 0,
+      resistance: 0,
+      execution: { entry: 0, sl: 0, tp: 0 }
+    }
+  ],
+  bearish: [
+    {
+      symbol: "WAITING",
+      price: 0,
+      adx: { value: 0, trend: "Flat" },
+      strategy: "Chico Bento Reverso",
+      trendStrengthScore: 0,
+      reasoning: "Aguardando dados...",
+      support: 0,
+      resistance: 0,
+      execution: { entry: 0, sl: 0, tp: 0 }
+    }
+  ]
 };
