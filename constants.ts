@@ -111,3 +111,16 @@ Gere um diagnóstico: 'Consistent Upward', 'Median Downward', 'Intermittent Vola
 }
 `;
 };
+
+export const DEMO_DATA: MarketAnalysisData = {
+  timestamp: new Date().toISOString(),
+  summary: "Aguardando análise em tempo real...",
+  marketHealth: {
+    projection: "Intermittent",
+    flowState: "Median",
+    score: 50,
+    reasoning: "Sistema reiniciado. Execute uma nova varredura para atualizar os dados."
+  },
+  bullish: [],
+  bearish: []
+};
