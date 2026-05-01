@@ -6,20 +6,18 @@ export const getGeminiPrompt = (timeframe: Timeframe): string => {
   if (timeframe === '1m' || timeframe === '3m' || timeframe === '5m') freshnessWindow = 'last 15 minutes';
 
   return `
-Atue como um **Algoritmo de HFT com Foco em ADX, Volatilidade Bilateral e Gestão de Risco**.
+// Atue como um Algoritmo de HFT com Foco em ADX, Volatilidade Bilateral e Gestão de Risco.
 
-⚠️ **REGRA DE OURO SOBRE PREÇOS:** Nunca altere a escala decimal do ativo. Se o preço atual de mercado do FETUSDT é 0.16, não sugira suportes em 2.35. Use o ticker completo (ex: PENGUUSDT) para precisão da API.
+⚠️ REGRA DE OURO SOBRE PREÇOS: Nunca altere a escala decimal do ativo. Use o ticker completo (ex: FETUSDT).
 
-
-🎯 **OBJETIVO:** Gerar OBRIGATORIAMENTE duas listas preenchidas: **3-5 BULLISH** e **3-5 BEARISH**.
-Não aceite menos que 3 ativos por categoria. Se não houver tendências perfeitas, selecione os ativos com maior volume e momentum relativo que cheguem mais perto dos critérios.
-
----
+🎯 OBJETIVO: Gerar OBRIGATORIAMENTE duas listas: 3-5 BULLISH e 3-5 BEARISH.
 
 ### 📊 CRITÉRIOS TÉCNICOS:
-1. **ADX & Momentum:** Foco em ativos com ADX > 25 e subindo.
-2. **Teste dos 15 Períodos:** Máximas (Alta) ou Mínimas (Baixa) renovadas nos últimos ${freshnessWindow}.
-3. **Cálculo de Risco:** Estime a volatilidade (ATR) para definir o Stop Loss ideal.
+1. **ADX & Convicção:** 
+   - ADX > 25 + Direção Ascendente = Recomendação "Chico Bento Original" (Rompimento).
+   - ADX < 20 ou Direção Descendente = Recomendação "Chico Bento Reverso" (Fading/Liquidez).
+2. **Teste dos 15 Períodos:** Máximas/Mínimas renovadas nos últimos ${freshnessWindow}.
+3. **Cálculo de Risco:** Estime volatilidade (ATR) para SL/TP de 1:1 rigoroso.
 
 ---
 
@@ -28,8 +26,8 @@ Não aceite menos que 3 ativos por categoria. Se não houver tendências perfeit
   "timestamp": "ISO Date String",
   "summary": "Resumo do cenário atual.",
   "marketHealth": {
-    "projection": "Consistent Upward/Downward/Intermittent", 
-    "flowState": "Consistent/Median/Intermittent", 
+    "projection": "Consistent Upward/Downward/Intermittent",
+    "flowState": "Consistent/Median/Intermittent",
     "score": 0-100,
     "reasoning": "Breve explicação macro."
   },
@@ -37,18 +35,15 @@ Não aceite menos que 3 ativos por categoria. Se não houver tendências perfeit
     {
       "symbol": "TICKERUSDT",
       "price": 0.00,
-      "change24h": 0.0,
-      "trend": "bullish",
-      "trendStrengthScore": 0-100, 
-      "reasoning": "Análise técnica.",
+      "adx": {
+        "value": 0.00,
+        "trend": "Rising/Falling/Flat"
+      },
+      "strategy": "Chico Bento Original" | "Chico Bento Reverso",
+      "trendStrengthScore": 0-100,
+      "reasoning": "Análise técnica com foco no ADX.",
       "support": 0.00,
       "resistance": 0.00,
-      "sparkline": [10 pontos de preço na escala correta],
-      "volatility": {
-        "noise": "Low" ou "High",
-        "atrPercent": "X.X%",
-        "stopBuffer": "X.X%"
-      },
       "execution": {
         "entry": 0.00,
         "sl": 0.00,
@@ -60,18 +55,15 @@ Não aceite menos que 3 ativos por categoria. Se não houver tendências perfeit
     {
       "symbol": "TICKERUSDT",
       "price": 0.00,
-      "change24h": -0.0,
-      "trend": "bearish",
-      "trendStrengthScore": 0-100, 
-      "reasoning": "Análise técnica.",
+      "adx": {
+        "value": 0.00,
+        "trend": "Rising/Falling/Flat"
+      },
+      "strategy": "Chico Bento Original" | "Chico Bento Reverso",
+      "trendStrengthScore": 0-100,
+      "reasoning": "Análise técnica com foco no ADX.",
       "support": 0.00,
       "resistance": 0.00,
-      "sparkline": [10 pontos de preço na escala correta],
-      "volatility": {
-        "noise": "Low" ou "High",
-        "atrPercent": "X.X%",
-        "stopBuffer": "X.X%"
-      },
       "execution": {
         "entry": 0.00,
         "sl": 0.00,
@@ -80,9 +72,6 @@ Não aceite menos que 3 ativos por categoria. Se não houver tendências perfeit
     }
   ]
 }
-`;
-};
-
 // Mantive o DEMO_DATA atualizado para você testar os cards clicando em "Load Demo"
 export const DEMO_DATA: MarketAnalysisData = {
   timestamp: new Date().toISOString(),
