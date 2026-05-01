@@ -115,124 +115,94 @@ Gere um diagnóstico: 'Consistent Upward', 'Median Downward', 'Intermittent Vola
 };
 
 export const DEMO_DATA: MarketAnalysisData = {
-  "timestamp": "2026-05-01T14:25:34Z",
-  "summary": "O mercado demonstra uma transição de regime após a expansão de momentum observada em ativos como FET e SOL. O fluxo global apresenta sinais de consolidação em topos locais, com o ADX começando a divergir entre ativos de alta e média capitalização.",
-  "marketHealth": {
-    "projection": "Intermittent",
-    "flowState": "Median",
-    "score": 58,
-    "reasoning": "Embora o momentum de curto prazo tenha sido validado por rompimentos de volume (SOL/FET), a sustentação acima das resistências BKM ainda carece de confirmação macro, favorecendo o monitoramento de exaustão."
+  timestamp: new Date().toISOString(),
+  summary: "Análise Bilateral: O mercado apresenta oportunidades claras em ambas as direções. Enquanto tokens de IA sobem forte, memecoins antigas estão perdendo suportes críticos.",
+  marketHealth: {
+    projection: "Median Upward",
+    flowState: "Median",
+    score: 65,
+    reasoning: "Embora tenhamos rompimentos fortes em IA (Bullish), o Bitcoin enfrenta resistência no semanal, o que gera divergências e torna o fluxo menos consistente (Median) do que uma tendência de alta pura."
   },
-  "bullish": [
+  bullish: [
     {
-      "symbol": "FETUSDT",
-      "price": 0.2003,
-      "adx": {
-        "value": 31.4,
-        "trend": "Rising"
-      },
-      "strategy": "Chico Bento Original",
-      "trendStrengthScore": 85,
-      "reasoning": "Rompimento de topo com volume clímax e ADX em forte ascensão acima de 25, indicando continuidade do momentum.",
-      "support": 0.1988,
-      "resistance": 0.2021,
-      "execution": {
-        "entry": 0.2021,
-        "sl": 0.2005,
-        "tp": 0.2037
-      }
+      symbol: "OGNUSDT",
+      price: 0.245,
+      change24h: 8.4,
+      trend: "bullish",
+      confidence: 96,
+      trendStrengthScore: 92,
+      reasoning: "ADX estimado em 45+. O preço subiu verticalmente nos últimos 20 min com volume 3x a média.",
+      volume: "Spike Climático",
+      support: 0.235,
+      resistance: 0.250,
+      sparkline: [0.22, 0.22, 0.225, 0.225, 0.23, 0.235, 0.24, 0.242, 0.244, 0.245]
     },
     {
-      "symbol": "SOLUSDT",
-      "price": 84.36,
-      "adx": {
-        "value": 29.8,
-        "trend": "Rising"
-      },
-      "strategy": "Chico Bento Original",
-      "trendStrengthScore": 78,
-      "reasoning": "Ativo em modo rompimento compra (6/10) com ADX ascendente validando a força da tendência atual.",
-      "support": 84.12,
-      "resistance": 84.55,
-      "execution": {
-        "entry": 84.55,
-        "sl": 84.41,
-        "tp": 84.69
-      }
+      symbol: "LPTUSDT",
+      price: 18.20,
+      change24h: 14.2,
+      trend: "bullish",
+      confidence: 92,
+      trendStrengthScore: 88,
+      reasoning: "Consistência Sólida: Topos e fundos ascendentes perfeitos no 15m.",
+      volume: "Constante",
+      support: 17.50,
+      resistance: 19.00,
+      sparkline: [16.5, 16.8, 17.0, 17.2, 17.1, 17.4, 17.8, 18.0, 18.1, 18.2]
     },
     {
-      "symbol": "TAOUSDT",
-      "price": 182.45,
-      "adx": {
-        "value": 26.2,
-        "trend": "Rising"
-      },
-      "strategy": "Chico Bento Original",
-      "trendStrengthScore": 65,
-      "reasoning": "Recuperação de médias móveis curtas com ADX cruzando o limiar de 25, sugerindo nova fase de expansão.",
-      "support": 180.08,
-      "resistance": 185.30,
-      "execution": {
-        "entry": 185.30,
-        "sl": 183.90,
-        "tp": 186.70
-      }
+      symbol: "PENDLE",
+      price: 2.85,
+      change24h: 5.5,
+      trend: "bullish",
+      confidence: 88,
+      trendStrengthScore: 82,
+      reasoning: "Rompimento de bandeira de alta. O ADX começou a inclinar para cima agora.",
+      volume: "Entrando agora",
+      support: 2.70,
+      resistance: 3.00,
+      sparkline: [2.70, 2.72, 2.71, 2.75, 2.74, 2.78, 2.80, 2.82, 2.84, 2.85]
     }
   ],
   "bearish": [
     {
-      "symbol": "WIFUSDT",
-      "price": 0.1850,
-      "adx": {
-        "value": 18.5,
-        "trend": "Falling"
-      },
-      "strategy": "Chico Bento Reverso",
-      "trendStrengthScore": 72,
-      "reasoning": "ADX abaixo de 20 e caindo indica ausência de tendência; rompimentos de topo são prováveis capturas de liquidez.",
-      "support": 0.1795,
-      "resistance": 0.1874,
-      "execution": {
-        "entry": 0.1874,
-        "sl": 0.1882,
-        "tp": 0.1866
-      }
+      symbol: "MEMEUSDT",
+      price: 0.024,
+      change24h: -12.5,
+      trend: "bearish",
+      confidence: 95,
+      trendStrengthScore: 94,
+      reasoning: "Queda livre (Waterfall). ADX alto indicando forte tendência de baixa. Suportes sendo ignorados.",
+      volume: "Venda massiva",
+      support: 0.022,
+      resistance: 0.026,
+      sparkline: [0.030, 0.029, 0.028, 0.027, 0.026, 0.026, 0.025, 0.025, 0.0245, 0.024]
     },
     {
-      "symbol": "NEARUSDT",
-      "price": 1.312,
-      "adx": {
-        "value": 19.2,
-        "trend": "Falling"
-      },
-      "strategy": "Chico Bento Reverso",
-      "trendStrengthScore": 55,
-      "reasoning": "Baixa volatilidade direcional favorece operações de retorno à média em extremidades de range.",
-      "support": 1.291,
-      "resistance": 1.329,
-      "execution": {
-        "entry": 1.329,
-        "sl": 1.334,
-        "tp": 1.324
-      }
+      symbol: "APEUSDT",
+      price: 1.12,
+      change24h: -6.5,
+      trend: "bearish",
+      confidence: 89,
+      trendStrengthScore: 85,
+      reasoning: "Perdeu o fundo da semana. Estrutura de baixa clara com topos descendentes no H1.",
+      volume: "Acelerando na queda",
+      support: 1.05,
+      resistance: 1.18,
+      sparkline: [1.25, 1.24, 1.22, 1.20, 1.19, 1.18, 1.15, 1.14, 1.13, 1.12]
     },
     {
-      "symbol": "LTCUSDT",
-      "price": 72.15,
-      "adx": {
-        "value": 21.0,
-        "trend": "Flat"
-      },
-      "strategy": "Chico Bento Reverso",
-      "trendStrengthScore": 48,
-      "reasoning": "Estagnação de preço em resistência histórica com ADX sem inclinação, sugerindo falha de rompimento.",
-      "support": 70.80,
-      "resistance": 73.20,
-      "execution": {
-        "entry": 73.20,
-        "sl": 73.65,
-        "tp": 72.75
-
+      symbol: "SANDUSDT",
+      price: 0.45,
+      change24h: -4.2,
+      trend: "bearish",
+      confidence: 85,
+      trendStrengthScore: 78,
+      reasoning: "Rejeição forte na média de 200 períodos. Iniciando nova perna de baixa.",
+      volume: "Venda moderada",
+      support: 0.42,
+      resistance: 0.48,
+      sparkline: [0.48, 0.48, 0.47, 0.47, 0.46, 0.46, 0.455, 0.452, 0.45, 0.45]
     }
   ]
 };
