@@ -23,58 +23,6 @@ export const getGeminiPrompt = (timeframe: Timeframe): string => {
 
 ---
 
-### 📤 FORMATO DE SAÍDA (JSON ESTRITO):
-{
-  "timestamp": "ISO Date String",
-  "summary": "Resumo do cenário atual.",
-  "marketHealth": {
-    "projection": "Consistent Upward/Downward/Intermittent",
-    "flowState": "Consistent/Median/Intermittent",
-    "score": 0-100,
-    "reasoning": "Breve explicação macro."
-  },
-  "bullish": [
-    {
-      "symbol": "TICKERUSDT",
-      "price": 0.00,
-      "adx": {
-        "value": 0.00,
-        "trend": "Rising/Falling/Flat"
-      },
-      "strategy": "Chico Bento Original" | "Chico Bento Reverso",
-      "trendStrengthScore": 0-100,
-      "reasoning": "Análise técnica com foco no ADX.",
-      "support": 0.00,
-      "resistance": 0.00,
-      "execution": {
-        "entry": 0.00,
-        "sl": 0.00,
-        "tp": 0.00
-      }
-    }
-  ],
-  "bearish": [
-    {
-      "symbol": "TICKERUSDT",
-      "price": 0.00,
-      "adx": {
-        "value": 0.00,
-        "trend": "Rising/Falling/Flat"
-      },
-      "strategy": "Chico Bento Original" | "Chico Bento Reverso",
-      "trendStrengthScore": 0-100,
-      "reasoning": "Análise técnica com foco no ADX.",
-      "support": 0.00,
-      "resistance": 0.00,
-      "execution": {
-        "entry": 0.00,
-        "sl": 0.00,
-        "tp": 0.00
-      }
-    }
-  ]
-}
-
 ### 📊 CRITÉRIOS DE ANÁLISE AVANÇADA (ADX & VOLUME):
 
 Para cada moeda, você deve calcular/estimar um **'trendStrengthScore' (0-100)** baseado em 3 pilares:
