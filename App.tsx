@@ -210,7 +210,7 @@ const App: React.FC = () => {
                   <div>
                     <h2 className="text-3xl font-bold flex items-center gap-3">
                       {selectedCoin.symbol}
-                      <span className={`text-sm px-2 py-1 rounded font-medium border ${selectedCoin.trend === 'bullish' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-red-500/10 text-red-400 border-red-500/20'}`}>{selectedCoin.trend.toUpperCase()}</span>
+                      <span className={`text-sm px-2 py-1 rounded font-medium border ${selectedCoin.trend === 'bullish' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-red-500/10 text-red-400 border-red-500/20'}`}>{selectedCoin?.trend?.toUpperCase() || "CARREGANDO..."}</span>
                     </h2>
                     <div className="mt-2 font-mono text-2xl text-white">${selectedCoin.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 })}</div>
                   </div>
