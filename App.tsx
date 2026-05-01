@@ -54,8 +54,8 @@ const App: React.FC = () => {
     setIsRefreshing(true);
     try {
       const [refreshedBullish, refreshedBearish] = await Promise.all([
-        enrichWithLivePrices(data.bullish),
-        enrichWithLivePrices(data.bearish)
+        enrichWithLivePrices(data?.bullish),
+        enrichWithLivePrices(data?.bearish)
       ]);
       const updatedData = { ...data, bullish: refreshedBullish, bearish: refreshedBearish };
       setData(updatedData);
@@ -188,8 +188,8 @@ const App: React.FC = () => {
                       <TrendingUp size={20} className="text-emerald-500" /> Bullish Trends
                    </div>
                    <div className="p-2 space-y-2 overflow-y-auto max-h-[380px]">
-                      {data.bullish.map(coin => (
-                        <CoinListItem key={coin.symbol} coin={coin} isSelected={selectedCoin.symbol === coin.symbol} onClick={() => setSelectedCoin(coin)} />
+                      {data?.bullish?.map(coin => (
+                        <CoinListItem key={coin.symbol} coin={coin} isSelected={selectedCoin?.symbol === coin.symbol} onClick={() => setSelectedCoin(coin)} />
                       ))}
                    </div>
                 </div>
@@ -198,8 +198,8 @@ const App: React.FC = () => {
                       <TrendingDown size={20} className="text-red-500" /> Bearish Trends
                    </div>
                    <div className="p-2 space-y-2 overflow-y-auto max-h-[380px]">
-                      {data.bearish.map(coin => (
-                        <CoinListItem key={coin.symbol} coin={coin} isSelected={selectedCoin.symbol === coin.symbol} onClick={() => setSelectedCoin(coin)} />
+                      {data.bearish?.map(coin => (
+                        <CoinListItem key={coin.symbol} coin={coin} isSelected={selectedCoin?.symbol === coin.symbol} onClick={() => setSelectedCoin(coin)} />
                       ))}
                    </div>
                 </div>
