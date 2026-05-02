@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { getLivePrice } from './services/binanceService';
 import { AppStep, MarketAnalysisData, MarketTrend, Timeframe } from './types';
 import { getGeminiPrompt, DEMO_DATA } from './constants';
@@ -27,7 +27,7 @@ import {
 const App: React.FC = () => {
   const [step, setStep] = useState<AppStep>('prompt');
   const [jsonInput, setJsonInput] = useState<string>('');
-  const [data, setData] = useState<MarketAnalysisData | null>(null);
+  const [data, setData] = useState<MarketAnalysisData | null>(DEMO_DATA);
   const [error, setError] = useState<string | null>(null);
   const [selectedCoin, setSelectedCoin] = useState<MarketTrend | null>(null);
   const [copied, setCopied] = useState(false);
