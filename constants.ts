@@ -1,3 +1,4 @@
+﻿
 import { MarketAnalysisData, Timeframe } from './types';
 
 export const getGeminiPrompt = (timeframe: Timeframe): string => {
@@ -10,6 +11,7 @@ export const getGeminiPrompt = (timeframe: Timeframe): string => {
 Atue como um **Algoritmo de HFT com Foco em ADX e Volatilidade Bilateral**.
 
 🎯 **OBJETIVO:** Gerar duas listas distintas: **TOP 3-5 BULLISH** e **TOP 3-5 BEARISH**.
+O usuário notou que você estava ignorando tendências de baixa. **É CRÍTICO buscar ativamente por moedas em queda livre (panic selling/breakdown).**
 
 ---
 
@@ -31,14 +33,14 @@ Para cada moeda, você deve calcular/estimar um **'trendStrengthScore' (0-100)**
     *   **Baixa:** Preço renovando MÍNIMAS nos últimos ${freshnessWindow}.
     *   *Nota:* Se o ativo inverteu a direção nos últimos 5 minutos, descarte. Queremos **continuidade**.
 
----
+**IMPORTANTE LEMBRAR SEMPRE (PRIORIDADE MÁXIMA):**
+*No campo reasoning sempre mencionar: o valor específico do adx (ex: 28.4) e a trend (direção). 
+Isso remove a subjetividade da sua análise passiva.
 
-### 📊 CRITÉRIOS TÉCNICOS:
-1. **ADX & Convicção:** 
-   - ADX > 25 + Direção Ascendente = Recomendação "Chico Bento Original" (Rompimento).
-   - ADX < 20 ou Direção Descendente = Recomendação "Chico Bento Reverso" (Fading/Liquidez).
-2. **Teste dos 15 Períodos:** Máximas/Mínimas renovadas nos últimos ${freshnessWindow}.
-3. **Cálculo de Risco:** Estime volatilidade (ATR) para SL/TP de 1:1 rigoroso.
+*No campo reasoning seja o mais explícito possível: O algoritmo agora deve escolher entre Original (Seguidor de Tendência se o adx for superior a 25) ou Reverso (Mean Reversion - se for inferior a 20) ou neutro se estiver entre estes dois baseado na força do ADX.
+
+
+---
 
 ### 🏥 MARKET HEALTH PROJECTION (NOVO - Seção Extra):
 Além de listar os ativos, analise o comportamento histórico macro (Diário/Semanal) dos ativos identificados.
@@ -53,59 +55,47 @@ Gere um diagnóstico: 'Consistent Upward', 'Median Downward', 'Intermittent Vola
 ### 🕵️‍♂️ PARÂMETROS DE BUSCA (Busque ambos os lados):
 *   Lado Compra: "Binance futures top gainers ${freshnessWindow}", "Crypto breakout strong volume"
 *   Lado Venda: "Binance futures top losers ${freshnessWindow}", "Crypto breakdown support levels", "Coins dumping right now"
-* Em todos os "reasoning": "Explique a análise técnica incluindo OBRIGATORIAMENTE o valor especifico do ADX e por que ele indica força ou fraqueza."
 
 ---
 
 ### 📤 FORMATO DE SAÍDA (JSON Obrigatório):
-
 {
   "timestamp": "ISO Date String",
-  "summary": "Resumo do cenário atual.",
+  "summary": "Resumo balanceado. Ex: 'Mercado misto. Encontramos 4 ativos rompendo topos e 3 ativos perdendo suportes importantes com alto volume de venda.'",
   "marketHealth": {
-    "projection": "Consistent Upward/Downward/Intermittent",
-    "flowState": "Consistent/Median/Intermittent",
-    "score": 0,
-    "reasoning": "Breve explicação macro."
+    "projection": "Consistent Upward", 
+    "flowState": "Consistent", 
+    "score": 85,
+    "reasoning": "A maioria dos ativos listados (Bullish) também apresenta estrutura de alta no gráfico diário e semanal, confirmando um fluxo saudável e sustentável."
   },
   "bullish": [
     {
-      "symbol": "TICKERUSDT",
+      "symbol": "COINUSDT",
       "price": 0.00,
-      "adx": {
-        "value": 0.00,
-        "trend": "Rising/Falling/Flat"
-      },
-      "strategy": "Chico Bento Original ou Chico Bento Reverso",
-      "trendStrengthScore": 0,
-      "reasoning": "Análise técnica com foco no ADX.",
+      "change24h": 5.0,
+      "trend": "bullish",
+      "confidence": 95,
+      "trendStrengthScore": 88, 
+      "reasoning": "ADX alto. Rompeu resistência de $10. Topos e fundos ascendentes claros no 15m.",
+      "volume": "Compra agressiva",
       "support": 0.00,
       "resistance": 0.00,
-      "execution": {
-        "entry": 0.00,
-        "sl": 0.00,
-        "tp": 0.00
-      }
+      "sparkline": [10, 10.2, 10.4, 10.3, 10.6, 10.9, 11.2, 11.5, 11.8, 12.0]
     }
   ],
   "bearish": [
-    {
-      "symbol": "TICKERUSDT",
+     {
+      "symbol": "DOWNUSDT",
       "price": 0.00,
-      "adx": {
-        "value": 0.00,
-        "trend": "Rising/Falling/Flat"
-      },
-      "strategy": "Chico Bento Original ou Chico Bento Reverso",
-      "trendStrengthScore": 0,
-      "reasoning": "Análise técnica com foco no ADX.",
+      "change24h": -8.0,
+      "trend": "bearish",
+      "confidence": 92,
+      "trendStrengthScore": 85, 
+      "reasoning": "Perdeu o suporte principal. Panic selling detectado. Candles vermelhos grandes sem pavio inferior.",
+      "volume": "Venda Massiva",
       "support": 0.00,
       "resistance": 0.00,
-      "execution": {
-        "entry": 0.00,
-        "sl": 0.00,
-        "tp": 0.00
-      }
+      "sparkline": [12.0, 11.8, 11.5, 11.2, 11.3, 11.0, 10.8, 10.5, 10.2, 10.0]
     }
   ]
 }
