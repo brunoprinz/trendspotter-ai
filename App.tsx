@@ -1,3 +1,4 @@
+﻿import './index.css';
 import React, { useState } from 'react';
 import { getLivePrice } from './services/binanceService';
 import { AppStep, MarketAnalysisData, MarketTrend, Timeframe } from './types';
@@ -27,7 +28,7 @@ import {
 const App: React.FC = () => {
   const [step, setStep] = useState<AppStep>('prompt');
   const [jsonInput, setJsonInput] = useState<string>('');
-  const [data, setData] = useState<MarketAnalysisData | null>(DEMO_DATA);
+  const [data, setData] = useState<MarketAnalysisData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [selectedCoin, setSelectedCoin] = useState<MarketTrend | null>(null);
   const [copied, setCopied] = useState(false);
@@ -54,8 +55,8 @@ const App: React.FC = () => {
     setIsRefreshing(true);
     try {
       const [refreshedBullish, refreshedBearish] = await Promise.all([
-        enrichWithLivePrices(data?.bullish),
-        enrichWithLivePrices(data?.bearish)
+        enrichWithLivePrices(data.bullish),
+        enrichWithLivePrices(data.bearish)
       ]);
       const updatedData = { ...data, bullish: refreshedBullish, bearish: refreshedBearish };
       setData(updatedData);
@@ -188,8 +189,8 @@ const App: React.FC = () => {
                       <TrendingUp size={20} className="text-emerald-500" /> Bullish Trends
                    </div>
                    <div className="p-2 space-y-2 overflow-y-auto max-h-[380px]">
-                      {data?.bullish?.map(coin => (
-                        <CoinListItem key={coin.symbol} coin={coin} isSelected={selectedCoin?.symbol === coin.symbol} onClick={() => setSelectedCoin(coin)} />
+                      {data.bullish.map(coin => (
+                        <CoinListItem key={coin.symbol} coin={coin} isSelected={selectedCoin.symbol === coin.symbol} onClick={() => setSelectedCoin(coin)} />
                       ))}
                    </div>
                 </div>
@@ -198,8 +199,8 @@ const App: React.FC = () => {
                       <TrendingDown size={20} className="text-red-500" /> Bearish Trends
                    </div>
                    <div className="p-2 space-y-2 overflow-y-auto max-h-[380px]">
-                      {data.bearish?.map(coin => (
-                        <CoinListItem key={coin.symbol} coin={coin} isSelected={selectedCoin?.symbol === coin.symbol} onClick={() => setSelectedCoin(coin)} />
+                      {data.bearish.map(coin => (
+                        <CoinListItem key={coin.symbol} coin={coin} isSelected={selectedCoin.symbol === coin.symbol} onClick={() => setSelectedCoin(coin)} />
                       ))}
                    </div>
                 </div>
@@ -210,7 +211,7 @@ const App: React.FC = () => {
                   <div>
                     <h2 className="text-3xl font-bold flex items-center gap-3">
                       {selectedCoin.symbol}
-                      <span className={`text-sm px-2 py-1 rounded font-medium border ${selectedCoin.trend === 'bullish' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-red-500/10 text-red-400 border-red-500/20'}`}>{selectedCoin?.trend?.toUpperCase() || "CARREGANDO..."}</span>
+                      <span className={`text-sm px-2 py-1 rounded font-medium border ${selectedCoin.trend === 'bullish' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-red-500/10 text-red-400 border-red-500/20'}`}>{selectedCoin.trend.toUpperCase()}</span>
                     </h2>
                     <div className="mt-2 font-mono text-2xl text-white">${selectedCoin.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 })}</div>
                   </div>
