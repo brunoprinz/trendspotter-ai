@@ -1,5 +1,4 @@
-﻿import './index.css';
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { getLivePrice } from './services/binanceService';
 import { AppStep, MarketAnalysisData, MarketTrend, Timeframe } from './types';
 import { getGeminiPrompt, DEMO_DATA } from './constants';
